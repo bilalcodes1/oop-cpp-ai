@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0f766e" />
+<title>مساعد OOP C++ | ذكاء اصطناعي متخصص</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Tajawal', 'system-ui', 'sans-serif'] },
+        colors: {
+          brand: { 50: '#f0fdfa', 100: '#ccfbf1', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a' }
+        }
+      }
+    }
+  }
+</script>
+
+<!-- Marked -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- Config (for API key) -->
+<script src="config.js"></script>
+
+<style>
+  body { font-family: 'Tajawal', sans-serif; }
+  .message { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .typing-dot { animation: typing 1.4s infinite; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+  .markdown-content h1 { font-size: 1.25rem; font-weight: 700; margin: 1rem 0 0.5rem; }
+  .markdown-content h2 { font-size: 1.1rem; font-weight: 700; margin: 0.75rem 0 0.5rem; }
+  .markdown-content h3 { font-size: 1rem; font-weight: 700; margin: 0.5rem 0; }
+  .markdown-content p { margin: 0.5rem 0; }
+  .markdown-content ul { list-style: disc; padding-right: 1.5rem; margin: 0.5rem 0; }
+  .markdown-content ol { list-style: decimal; padding-right: 1.5rem; margin: 0.5rem 0; }
+  .markdown-content code { background: #f1f5f9; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-family: monospace; }
+  .markdown-content pre { background: #1e293b; color: #f1f5f9; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 0.5rem 0; }
+  .markdown-content pre code { background: transparent; padding: 0; color: inherit; }
+  .markdown-content blockquote { border-right: 4px solid #14b8a6; padding-right: 1rem; margin: 0.5rem 0; color: #475569; }
+  .markdown-content strong { font-weight: 700; color: #0f766e; }
+</style>
+</head>
+
+<body class="bg-slate-50 h-screen flex flex-col overflow-hidden">
+
+<!-- Header -->
+<header class="bg-brand-700 text-white shadow-lg flex-shrink-0">
+  <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-2xl">💻</div>
+      <div>
+        <h1 class="font-black text-lg">مساعد OOP C++</h1>
+        <p class="text-xs text-white/80">ذكاء اصطناعي متخصص في البرمجة كائنية التوجه</p>
+      </div>
+    </div>
+    <button onclick="clearChat()" class="text-sm bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">
+      🗑️ محادثة جديدة
+    </button>
+  </div>
+</header>
+
+<!-- Context Info -->
+<div class="bg-brand-50 border-b border-brand-100 flex-shrink-0">
+  <div class="max-w-4xl mx-auto px-4 py-2 flex items-center gap-2 text-sm text-brand-800">
+    <span>📚</span>
+    <span>متخصص في 11 ملزمة: الوراثة، التعددية الشكلية، البناءات، التجريد، UML، والمزيد</span>
+  </div>
+</div>
+
+<!-- Chat Area -->
+<main id="chatContainer" class="flex-1 overflow-y-auto">
+  <div class="max-w-4xl mx-auto px-4 py-6 space-y-4">
+    
+    <!-- Welcome Message -->
+    <div class="message flex gap-3">
+      <div class="w-10 h-10 rounded-full bg-brand-600 flex items-center justify-center text-white flex-shrink-0">🤖</div>
+      <div class="flex-1">
+        <div class="bg-white border border-slate-200 rounded-2xl rounded-tr-sm px-4 py-3 shadow-sm">
+          <div class="font-bold text-brand-700 mb-1">المساعد</div>
+          <div class="markdown-content text-slate-700">
+            <p>أهلاً بيك! 👋</p>
+            <p>أنا مساعد متخصص في <strong>OOP C++</strong> (البرمجة كائنية التوجه). عندي معلومات من 11 ملزمة شاملة:</p>
+            <ul>
+              <li>البناءات (Constructors)</li>
+              <li>الوراثة أحادية المستوى والمتعددة</li>
+              <li>التعددية الشكلية (Polymorphism)</li>
+              <li>التجريد والفصول المجردة</li>
+              <li>التركيب (Composition)</li>
+              <li>UML وغيرها</li>
+            </ul>
+            <p>اسألني أي سؤال عن OOP C++ وأجاوبك بناءً على هاي الملازم! 🚀</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Input Area -->
+<div class="bg-white border-t border-slate-200 flex-shrink-0">
+  <div class="max-w-4xl mx-auto px-4 py-4">
+    <form id="chatForm" class="flex gap-2">
+      <textarea 
+        id="userInput" 
+        rows="1"
+        class="flex-1 bg-slate-100 border-0 rounded-xl px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800"
+        placeholder="اكتب سؤالك عن OOP C++... مثال: شنو هو الـ Polymorphism؟"
+      ></textarea>
+      <button 
+        type="submit" 
+        id="sendBtn"
+        class="bg-brand-600 hover:bg-brand-700 text-white rounded-xl px-5 font-bold transition flex items-center gap-1"
+      >
+        <span>إرسال</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+        </svg>
+      </button>
+    </form>
+    <p class="text-xs text-slate-400 mt-2 text-center">
+      💡 الأجوبة مبنية على محتوى الملازم الـ 11 | قد يحتوي الرد على أخطاء، تحقق دائماً
+    </p>
+  </div>
+</div>
+
+<!-- Config Check -->
+<div id="configError" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-2xl p-6 max-w-md mx-4 text-center">
+    <div class="text-4xl mb-3">🔑</div>
+    <h2 class="font-bold text-lg mb-2 text-slate-800">مفتاح API مطلوب</h2>
+    <p class="text-slate-600 text-sm mb-3">لتفعيل الذكاء الاصطناعي، أضف مفتاح DeepSeek API:</p>
+    <ol class="text-right text-sm text-slate-600 mb-4 space-y-1">
+      <li>1. سجل في <a href="https://platform.deepseek.com/" target="_blank" class="text-brand-600 hover:underline">platform.deepseek.com</a></li>
+      <li>2. احصل على مفتاح API مجاني</li>
+      <li>3. افتح ملف <code class="bg-slate-100 px-1 rounded">oop-config.js</code></li>
+      <li>4. ألصق المفتاح في <code class="bg-slate-100 px-1 rounded">DEEPSEEK_API_KEY</code></li>
+    </ol>
+    <button onclick="document.getElementById('configError').classList.add('hidden')" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition">
+      حسناً
+    </button>
+  </div>
+</div>
+
+<script>
+// OOP Context - 11 Lectures
+const OOP_CONTEXT = `
+أنت مساعد متخصص في OOP C++ (Object-Oriented Programming). لديك معرفة شاملة بالملازم التالية:
+
+1. **Constructors** - البناءات: أنواعها، البناء الافتراضي، نسخ الكائنات، البناء بالنقل (Move)
+2. **Single_Level_inheritance** - الوراثة أحادية المستوى: المفهوم، الأنواع، protected
+3. **Single_level_inheritance_member_hiding** - إخفاء الأعضاء والـ Object Slicing
+4. **Single_level_Appendix** - تطبيقات وامثلة على الوراثة الأحادية
+5. **Multi_level_inheritance** - الوراثة متعددة المستويات
+6. **multiple_inheritance** - الوراثة المتعددة: diamond problem، الحلول
+7. **Polymorphism** - التعددية الشكلية: Overloading، Overriding، Virtual Functions
+8. **Abstract Classes vs Interfaces** - الفصول المجردة مقابل الواجهات
+9. **Composition_OOP** - التركيب: HAS-A relationship، مقارنة مع الوراثة
+10. **Files in Object** - العمل مع الملفات في الكائنات
+11. **uml_lecture** - UML: الرسومات البيانية، العلاقات بين الفصول
+
+أجب على الأسئلة بناءً على هذه المفاهيم. استخدم أمثلة C++ عند الحاجة.
+`;
+
+// DeepSeek API Config (loaded from oop-config.js)
+let DEEPSEEK_API_KEY = '';
+let DEEPSEEK_BASE_URL = 'https://api.deepseek.com';
+
+// Load config from OOP_CONFIG if available
+if (typeof OOP_CONFIG !== 'undefined') {
+  DEEPSEEK_API_KEY = OOP_CONFIG.DEEPSEEK_API_KEY || '';
+  DEEPSEEK_BASE_URL = OOP_CONFIG.DEEPSEEK_BASE_URL || 'https://api.deepseek.com';
+}
+
+// Also check window globals (fallback)
+if (typeof window !== 'undefined' && window.DEEPSEEK_API_KEY) {
+  DEEPSEEK_API_KEY = window.DEEPSEEK_API_KEY;
+}
+
+const chatContainer = document.getElementById('chatContainer');
+const chatForm = document.getElementById('chatForm');
+const userInput = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+
+// Auto-resize textarea
+userInput.addEventListener('input', () => {
+  userInput.style.height = 'auto';
+  userInput.style.height = Math.min(userInput.scrollHeight, 120) + 'px';
+});
+
+// Enter to send, Shift+Enter for new line
+userInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    chatForm.dispatchEvent(new Event('submit'));
+  }
+});
+
+let isTyping = false;
+
+chatForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const message = userInput.value.trim();
+  if (!message || isTyping) return;
+  
+  // Check API key (must not be empty or placeholder)
+  if (!DEEPSEEK_API_KEY || DEEPSEEK_API_KEY.includes('xxxxxxxx')) {
+    document.getElementById('configError').classList.remove('hidden');
+    return;
+  }
+  
+  // Add user message
+  addMessage(message, 'user');
+  userInput.value = '';
+  userInput.style.height = 'auto';
+  
+  // Show typing
+  showTyping();
+  isTyping = true;
+  sendBtn.disabled = true;
+  
+  try {
+    const response = await callDeepSeek(message);
+    hideTyping();
+    addMessage(response, 'bot');
+  } catch (error) {
+    hideTyping();
+    addMessage('عذراً، حدث خطأ في الاتصال. تأكد من اتصال الإنترنت أو مفتاح API.\n\nالخطأ: ' + error.message, 'bot');
+  }
+  
+  isTyping = false;
+  sendBtn.disabled = false;
+});
+
+function addMessage(text, sender) {
+  const messageDiv = document.createElement('div');
+  messageDiv.className = 'message flex gap-3';
+  
+  const isBot = sender === 'bot';
+  const avatar = isBot ? '🤖' : '👤';
+  const bgColor = isBot ? 'bg-white border border-slate-200' : 'bg-brand-600 text-white';
+  const textColor = isBot ? 'text-slate-700' : 'text-white';
+  const nameColor = isBot ? 'text-brand-700' : 'text-white/90';
+  const senderName = isBot ? 'المساعد' : 'أنت';
+  const rounded = isBot ? 'rounded-tr-sm' : 'rounded-tl-sm';
+  
+  // Render markdown for bot messages
+  let contentHtml;
+  if (isBot) {
+    contentHtml = `<div class="markdown-content">${marked.parse(text)}</div>`;
+  } else {
+    contentHtml = `<div>${escapeHtml(text)}</div>`;
+  }
+  
+  messageDiv.innerHTML = `
+    <div class="flex ${isBot ? '' : 'flex-row-reverse'} gap-3 w-full">
+      <div class="w-10 h-10 rounded-full ${isBot ? 'bg-brand-600' : 'bg-slate-500'} flex items-center justify-center text-white flex-shrink-0 text-lg">
+        ${avatar}
+      </div>
+      <div class="flex-1 ${isBot ? '' : 'text-left'}">
+        <div class="${bgColor} rounded-2xl ${rounded} px-4 py-3 shadow-sm inline-block max-w-full">
+          <div class="font-bold ${nameColor} mb-1 text-sm">${senderName}</div>
+          <div class="${textColor}">${contentHtml}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  chatContainer.querySelector('div').appendChild(messageDiv);
+  scrollToBottom();
+}
+
+function showTyping() {
+  const typingDiv = document.createElement('div');
+  typingDiv.id = 'typingIndicator';
+  typingDiv.className = 'message flex gap-3';
+  typingDiv.innerHTML = `
+    <div class="flex gap-3 w-full">
+      <div class="w-10 h-10 rounded-full bg-brand-600 flex items-center justify-center text-white flex-shrink-0 text-lg">🤖</div>
+      <div class="flex-1">
+        <div class="bg-white border border-slate-200 rounded-2xl rounded-tr-sm px-4 py-3 shadow-sm">
+          <div class="font-bold text-brand-700 mb-1 text-sm">المساعد</div>
+          <div class="flex gap-1 py-2">
+            <span class="typing-dot w-2 h-2 bg-brand-400 rounded-full"></span>
+            <span class="typing-dot w-2 h-2 bg-brand-400 rounded-full"></span>
+            <span class="typing-dot w-2 h-2 bg-brand-400 rounded-full"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  chatContainer.querySelector('div').appendChild(typingDiv);
+  scrollToBottom();
+}
+
+function hideTyping() {
+  const typing = document.getElementById('typingIndicator');
+  if (typing) typing.remove();
+}
+
+function scrollToBottom() {
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+async function callDeepSeek(message) {
+  const response = await fetch(`${DEEPSEEK_BASE_URL}/chat/completions`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      messages: [
+        { role: 'system', content: OOP_CONTEXT },
+        { role: 'user', content: message }
+      ],
+      temperature: 0.7,
+      max_tokens: 2000
+    })
+  });
+  
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`API Error: ${response.status} - ${error}`);
+  }
+  
+  const data = await response.json();
+  return data.choices[0].message.content;
+}
+
+function clearChat() {
+  if (!confirm('هل تريد بدء محادثة جديدة؟')) return;
+  
+  const container = chatContainer.querySelector('div');
+  container.innerHTML = `
+    <div class="message flex gap-3">
+      <div class="w-10 h-10 rounded-full bg-brand-600 flex items-center justify-center text-white flex-shrink-0">🤖</div>
+      <div class="flex-1">
+        <div class="bg-white border border-slate-200 rounded-2xl rounded-tr-sm px-4 py-3 shadow-sm">
+          <div class="font-bold text-brand-700 mb-1">المساعد</div>
+          <div class="markdown-content text-slate-700">
+            <p>محادثة جديدة! 👋</p>
+            <p>اسألني أي سؤال عن <strong>OOP C++</strong>:</p>
+            <ul>
+              <li>البناءات والهادمات</li>
+              <li>الوراثة بأنواعها</li>
+              <li>التعددية الشكلية</li>
+              <li>الفصول المجردة</li>
+              <li>UML والتركيب</li>
+            </ul>
+            <p>جاهز للمساعدة! 🚀</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Scroll to bottom on load
+window.addEventListener('load', scrollToBottom);
+</script>
+
+</body>
+</html>
